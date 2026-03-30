@@ -7,13 +7,15 @@ import Orders from "../Components/Orders/Orders";
 import Profile from "../Components/Profile/Profile";
 
 const router = createBrowserRouter([
-    {path:'/',Component:Root,children:[
-        {index:true,Component:Home},
-        {path:'registation',Component:Registation},
-        {path:'login',Component:LogIn},
-        {path:'orders',Component:Orders},
-        {path:'profile',Component:Profile},
-       
-    ]}
+    {
+        path: '/', Component: Root, children: [
+            { index: true, Component: Home },
+            { path: 'registation', Component: Registation },
+            { path: 'login', Component: LogIn },
+            { path: 'orders', Component: Orders },
+            { path: 'profile', Component: Profile },
+
+        ]
+    }
 ])
 export default router;
