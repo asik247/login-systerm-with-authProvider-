@@ -10,10 +10,10 @@ const router = createBrowserRouter([
     {path:'/',Component:Root,children:[
         {index:true,Component:Home},
         {path:'registation',Component:Registation},
+        {path:'login',Component:LogIn},
         {path:'orders',Component:Orders},
         {path:'profile',Component:Profile},
-        {path:'registation',Component:''},
-        {path:'registation',Component:''},
+       
     ]}
 ])
 export default router;
