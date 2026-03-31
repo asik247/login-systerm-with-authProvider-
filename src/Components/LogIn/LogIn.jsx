@@ -9,6 +9,8 @@ const LogIn = () => {
   const { logInUsers } = useContext(AuthContext);
   const [emailValue, handleEmailChange] = useMyHook('');
   const [passwordValue, handlePasswordChange] = useMyHook('');
+  // show user state here;
+  const [user,setUser] = useState('');
   // useRef code here;
   const emailRef = useRef(null);
   // Error and success message showing;
@@ -23,6 +25,7 @@ const LogIn = () => {
       .then(res => {
         console.log(res.user);
         setSuccess(res.user)
+        setUser(res.user)
         // Email Validation checked;
         if(!res.user.emailVerified){
           alert('please email validate!')
@@ -77,6 +80,12 @@ const LogIn = () => {
                   New to our website ? please <NavLink className={'text-blue-600 font-bold underline text-sm'} to={'/registation'}> Registation</NavLink>
                 </div>
               </form>
+              <div>
+                {user && <div>
+                    <h2>{user.displayName}</h2>
+                    <img className='w-[100px]' src={user.photoURL} alt="" />
+                  </div>}
+              </div>
             </div>
           </div>
         </div>

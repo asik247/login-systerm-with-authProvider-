@@ -4,7 +4,7 @@ import useMyHook from '../../Hooks/useMyHook';
 import { FaEye } from 'react-icons/fa';
 import { FaEyeLowVision } from 'react-icons/fa6';
 import { NavLink } from 'react-router';
-import { sendEmailVerification } from 'firebase/auth';
+import { sendEmailVerification, updateProfile } from 'firebase/auth';
 
 const Registation = () => {
     // RegistationUsers Recive;
@@ -12,6 +12,8 @@ const Registation = () => {
     // custom hook code here;
     const [emailValue, handleEmailChange] = useMyHook('');
     const [passwordValue, handlePasswordChange] = useMyHook('');
+    const [nameValue, handleNameChange] = useMyHook('');
+    const [photoValue, handlePhotoChange] = useMyHook('');
     // Error and success message showing;
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState('');
@@ -23,22 +25,22 @@ const Registation = () => {
         // regEx validation code here;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
-       
+
         console.log(emailValue, passwordValue);
         // Reset code;
         setError(false);
         setSuccess('');
         // Email , passowrd validation code here;
-        if(!emailRegex.test(emailValue)){
+        if (!emailRegex.test(emailValue)) {
             alert("Invalid Email ❌");
             return;
         }
-        if(!passwordRegex.test(passwordValue)){
-             alert("Password must be strong ❌");
-             return;
+        if (!passwordRegex.test(passwordValue)) {
+            alert("Password must be strong ❌");
+            return;
         }
         // Terms condition code;
-        if(!terms){
+        if (!terms) {
             alert("please accept terms!")
             return;
         }
@@ -48,11 +50,17 @@ const Registation = () => {
                 setSuccess(res.user);
                 // Email varification code here;
                 sendEmailVerification(res.user)
-                .then(()=>{
-                    alert("Checked your email then login")
-                }).catch(error=>{
-                    console.log(error);
-                })
+                    .then(() => {
+                        alert("Checked your email then login")
+                    }).catch(error => {
+                        console.log(error);
+                    })
+                // update profile code here;
+                const profile = {
+                    displayName: nameValue,
+                    photoURL: photoValue
+                }
+                updateProfile(res.user, profile)
 
             }).catch(error => {
                 console.log(error.message);
@@ -65,7 +73,7 @@ const Registation = () => {
         setEye(!eye);
         console.log("eye btn clicked");
     }
-   
+
     return (
         <div>
             <div className="hero min-h-screen">
@@ -78,6 +86,13 @@ const Registation = () => {
                         <div className="card-body">
                             <form onSubmit={submitBtn}>
                                 <fieldset className="fieldset">
+                                    {/* Name Input Field */}
+                                    <label className="label">Name</label>
+                                    <input type="text" value={nameValue} onChange={handleNameChange} className="input" placeholder="Your Name" />
+                                    {/* Photo Input Field */}
+                                    <label className="label">Photo</label>
+                                    <input type="text" value={photoValue} onChange={handlePhotoChange} className="input" placeholder="PhotoURL" />
+
                                     {/* Email Input Field */}
                                     <label className="label">Email</label>
                                     <input type="email" value={emailValue} onChange={handleEmailChange} className="input" placeholder="Email" />
