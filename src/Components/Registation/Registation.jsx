@@ -7,9 +7,16 @@ const Registation = () => {
 const {registationUsers} = useContext(AuthContext);
 // custom hook code here;
 const [emailValue,handleEmailChange] = useMyHook('');
+const [passwordValue,handlePasswordChange] = useMyHook('');
 const submitBtn = (e)=>{
     e.preventDefault();
-    console.log(emailValue);
+    console.log(emailValue,passwordValue);
+    registationUsers(emailValue,passwordValue)
+    .then(res=>{
+        console.log(res.user);
+    }).catch(error=>{
+        console.log(error.message);
+    })
 }
     return (
         <div>
@@ -28,7 +35,7 @@ const submitBtn = (e)=>{
                                     <input type="email" value={emailValue} onChange={handleEmailChange} className="input" placeholder="Email" />
                                     {/* Password Input Field */}
                                     <label className="label">Password</label>
-                                    <input type="password" className="input" placeholder="Password" />
+                                    <input type="password" value={passwordValue} onChange={handlePasswordChange} className="input" placeholder="Password" />
                                     <button className="btn btn-neutral mt-4">Registation</button>
                                 </fieldset>
                             </form>
