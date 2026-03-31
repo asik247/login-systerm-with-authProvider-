@@ -3,6 +3,7 @@ import { AuthContext } from '../../Contexts/AuthContext';
 import useMyHook from '../../Hooks/useMyHook';
 import { FaEye } from 'react-icons/fa';
 import { FaEyeLowVision } from 'react-icons/fa6';
+import { NavLink } from 'react-router';
 
 const Registation = () => {
     // RegistationUsers Recive;
@@ -16,12 +17,26 @@ const Registation = () => {
     const [eye, setEye] = useState(false);
     const submitBtn = (e) => {
         e.preventDefault();
+        // Terms code here;
         const terms = e.target.terms.checked;
+        // regEx validation code here;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
        
         console.log(emailValue, passwordValue);
         // Reset code;
         setError(false);
         setSuccess('');
+        // Email , passowrd validation code here;
+        if(!emailRegex.test(emailValue)){
+            alert("Invalid Email ❌");
+            return;
+        }
+        if(!passwordRegex.test(passwordValue)){
+             alert("Password must be strong ❌");
+             return;
+        }
+        // Terms condition code;
         if(!terms){
             alert("please accept terms!")
             return;
@@ -81,6 +96,9 @@ const Registation = () => {
                                 <div>
                                     {success && <p className='text-green-500-500 font-bold mt-3'>Successfully Registation!</p>}
                                     {error && <p className='text-red-500 font-bold mt-3'>{error}</p>}
+                                </div>
+                                <div className='mt-3'>
+                                    Already have'n account ? please <NavLink className={'text-blue-600 font-bold underline text-sm'} to={'/login'}> Login</NavLink>
                                 </div>
                             </form>
                         </div>
