@@ -14,6 +14,9 @@ const Registation = () => {
     const submitBtn = (e) => {
         e.preventDefault();
         console.log(emailValue, passwordValue);
+        // Reset code;
+        setError(false);
+        setSuccess('');
         registationUsers(emailValue, passwordValue)
             .then(res => {
                 console.log(res.user);
