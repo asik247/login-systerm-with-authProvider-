@@ -1,12 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { NavLink } from 'react-router';
 import useMyHook from '../../Hooks/useMyHook';
 import { AuthContext } from '../../Contexts/AuthContext';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../../Firebase/firebase.init';
 
 const LogIn = () => {
   const { logInUsers } = useContext(AuthContext);
   const [emailValue, handleEmailChange] = useMyHook('');
   const [passwordValue, handlePasswordChange] = useMyHook('');
+  // useRef code here;
+  const emailRef = useRef(null);
   // Error and success message showing;
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState('');
@@ -31,6 +35,18 @@ const LogIn = () => {
 
 
   }
+  // Password Reset code here;
+  const passwordReset = (e)=>{
+    e.preventDefault();
+    const email = emailRef.current.value;
+    // console.log("password Rest btn clicked",email);
+    sendPasswordResetEmail(auth,email)
+    .then(()=>{
+      alert('Email Checked and password reset')
+    }).catch(error=>{
+      console.log(error);
+    })
+  }
   return (
     <div>
       <div className="hero  min-h-screen">
@@ -44,11 +60,12 @@ const LogIn = () => {
                 <fieldset className="fieldset">
                   {/* Email Input field */}
                   <label className="label">Email</label>
-                  <input type="email" onChange={handleEmailChange} className="input" value={emailValue} placeholder="Email" />
+                  <input type="email" onChange={handleEmailChange} className="input" ref={emailRef} value={emailValue} placeholder="Email" />
                   {/* Password Input field */}
                   <label className="label">Password</label>
                   <input type="password" value={passwordValue} className="input" onChange={handlePasswordChange} placeholder="Password" />
-                  <div><a className="link link-hover">Forgot password?</a></div>
+                  {/* Password Rest code here */}
+                  <div onClick={passwordReset}><a className="link link-hover">Forgot password?</a></div>
                   <button className="btn btn-neutral mt-4">Login</button>
                 </fieldset>
                 {/* Errror and success message */}
