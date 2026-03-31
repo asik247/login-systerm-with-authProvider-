@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
 
   // user state here;
   const [user,setUser] = useState(null);
+  const [loading,setLoading] = useState(true);
   const provider = new GoogleAuthProvider();
   // Registation/signup code start here;
   const registationUsers = (email, password) => {
@@ -30,6 +31,7 @@ const AuthProvider = ({ children }) => {
     const unsubcribe = onAuthStateChanged(auth,(currentUser)=>{
       console.log("login then user:",currentUser);
       setUser(currentUser)
+      setLoading(false)
     })
     return ()=> unsubcribe();
   },[])
@@ -38,7 +40,8 @@ const AuthProvider = ({ children }) => {
     logInUsers,
     loginWithGoogle,
     signOutUsers,
-    user
+    user,
+    loading
   }
   return (
     <AuthContext value={userInfo}>

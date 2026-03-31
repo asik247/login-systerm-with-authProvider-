@@ -3,7 +3,10 @@ import { NavLink } from 'react-router';
 import { AuthContext } from '../../Contexts/AuthContext';
 
 const Navbar = () => {
-    const { signOutUsers, user } = useContext(AuthContext);
+    const { signOutUsers, user,loading } = useContext(AuthContext);
+    if(loading){
+       return <p>Loadding...</p>
+    }
     const signOutHandler = () => {
         signOutUsers()
             .then(() => {
