@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../Contexts/AuthContext';
 
 const Registation = () => {
-  
+// RegistationUsers Recive;
+const {registationUsers} = useContext(AuthContext);
+console.log(registationUsers);
     return (
         <div>
             <div className="hero min-h-screen">
