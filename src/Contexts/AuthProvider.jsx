@@ -7,7 +7,7 @@ const AuthProvider = ({children}) => {
         age:20
     }
     return (
-      <AuthContext value={userInfo}>
+      <AuthContext value={userInfo}> 
         {children}
       </AuthContext>
     );
