@@ -4,6 +4,7 @@ import useMyHook from '../../Hooks/useMyHook';
 import { FaEye } from 'react-icons/fa';
 import { FaEyeLowVision } from 'react-icons/fa6';
 import { NavLink } from 'react-router';
+import { sendEmailVerification } from 'firebase/auth';
 
 const Registation = () => {
     // RegistationUsers Recive;
@@ -45,6 +46,13 @@ const Registation = () => {
             .then(res => {
                 console.log(res.user);
                 setSuccess(res.user);
+                // Email varification code here;
+                sendEmailVerification(res.user)
+                .then(()=>{
+                    alert("Checked your email then login")
+                }).catch(error=>{
+                    console.log(error);
+                })
 
             }).catch(error => {
                 console.log(error.message);

@@ -19,6 +19,10 @@ const LogIn = () => {
       .then(res => {
         console.log(res.user);
         setSuccess(res.user)
+        // Email Validation checked;
+        if(!res.user.emailVerified){
+          alert('please email validate!')
+        }
       }).catch(error => {
         console.log(error.message);
         setError(error.message)
