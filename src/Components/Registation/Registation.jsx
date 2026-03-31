@@ -8,7 +8,7 @@ import { sendEmailVerification, updateProfile } from 'firebase/auth';
 
 const Registation = () => {
     // RegistationUsers Recive;
-    const { registationUsers } = useContext(AuthContext);
+    const { registationUsers,loading } = useContext(AuthContext);
     // custom hook code here;
     const [emailValue, handleEmailChange] = useMyHook('');
     const [passwordValue, handlePasswordChange] = useMyHook('');
@@ -113,7 +113,7 @@ const Registation = () => {
                                         </label>
                                     </div>
 
-                                    <button className="btn btn-neutral mt-4">Registation</button>
+                                    <button disabled={loading} className="btn btn-neutral mt-4">{loading ? 'creatting...':'Registation'}</button>
                                 </fieldset>
                                 {/* Errror and success message */}
                                 <div>

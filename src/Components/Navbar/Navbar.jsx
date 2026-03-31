@@ -4,9 +4,11 @@ import { AuthContext } from '../../Contexts/AuthContext';
 
 const Navbar = () => {
     const { signOutUsers, user,loading } = useContext(AuthContext);
+    // loading message showing;
     if(loading){
        return <p>Loadding...</p>
     }
+    // sign out code here;
     const signOutHandler = () => {
         signOutUsers()
             .then(() => {
