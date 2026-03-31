@@ -11,6 +11,7 @@ const LogIn = () => {
   const [passwordValue, handlePasswordChange] = useMyHook('');
   const navgate = useNavigate();
   const location = useLocation();
+  console.log(location);
   // show user state here;
   const [user, setUser] = useState('');
   // useRef code here;
@@ -60,6 +61,7 @@ const LogIn = () => {
     loginWithGoogle()
     .then(res=>{
       console.log(res.user);
+      navgate(location.state || '/')
     }).catch(error=>{
       console.log(error.message);
     })
