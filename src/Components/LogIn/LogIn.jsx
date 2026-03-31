@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { NavLink } from 'react-router';
+import {NavLink, useLocation, useNavigate } from 'react-router';
 import useMyHook from '../../Hooks/useMyHook';
 import { AuthContext } from '../../Contexts/AuthContext';
 import { sendPasswordResetEmail } from 'firebase/auth';
@@ -9,6 +9,8 @@ const LogIn = () => {
   const { logInUsers,loginWithGoogle,loading } = useContext(AuthContext);
   const [emailValue, handleEmailChange] = useMyHook('');
   const [passwordValue, handlePasswordChange] = useMyHook('');
+  const navgate = useNavigate();
+  const location = useLocation();
   // show user state here;
   const [user, setUser] = useState('');
   // useRef code here;
@@ -26,6 +28,7 @@ const LogIn = () => {
         console.log(res.user);
         setSuccess(res.user)
         setUser(res.user)
+        navgate(location.state || '/')
         // Email Validation checked;
         if (!res.user.emailVerified) {
           alert('please email validate!')
