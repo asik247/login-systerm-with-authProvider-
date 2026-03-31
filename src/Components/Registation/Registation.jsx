@@ -1,23 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../Contexts/AuthContext';
 import useMyHook from '../../Hooks/useMyHook';
 
 const Registation = () => {
-// RegistationUsers Recive;
-const {registationUsers} = useContext(AuthContext);
-// custom hook code here;
-const [emailValue,handleEmailChange] = useMyHook('');
-const [passwordValue,handlePasswordChange] = useMyHook('');
-const submitBtn = (e)=>{
-    e.preventDefault();
-    console.log(emailValue,passwordValue);
-    registationUsers(emailValue,passwordValue)
-    .then(res=>{
-        console.log(res.user);
-    }).catch(error=>{
-        console.log(error.message);
-    })
-}
+    // RegistationUsers Recive;
+    const { registationUsers } = useContext(AuthContext);
+    // custom hook code here;
+    const [emailValue, handleEmailChange] = useMyHook('');
+    const [passwordValue, handlePasswordChange] = useMyHook('');
+    // Error and success message showing;
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState('');
+    const submitBtn = (e) => {
+        e.preventDefault();
+        console.log(emailValue, passwordValue);
+        registationUsers(emailValue, passwordValue)
+            .then(res => {
+                console.log(res.user);
+                setSuccess(res.user);
+
+            }).catch(error => {
+                console.log(error.message);
+                setError(error.message)
+            })
+    }
     return (
         <div>
             <div className="hero min-h-screen">
@@ -38,6 +44,11 @@ const submitBtn = (e)=>{
                                     <input type="password" value={passwordValue} onChange={handlePasswordChange} className="input" placeholder="Password" />
                                     <button className="btn btn-neutral mt-4">Registation</button>
                                 </fieldset>
+                                {/* Errror and success message */}
+                                <div>
+                                    {success && <p className='text-green-500-500 font-bold mt-3'>Successfully Registation!</p>}
+                                    {error && <p className='text-red-500 font-bold mt-3'>{error}</p>}
+                                </div>
                             </form>
                         </div>
                     </div>
