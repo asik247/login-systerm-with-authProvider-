@@ -13,13 +13,19 @@ const Registation = () => {
     // Error and success message showing;
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState('');
-    const [eye,setEye] = useState(false);
+    const [eye, setEye] = useState(false);
     const submitBtn = (e) => {
         e.preventDefault();
+        const terms = e.target.terms.checked;
+       
         console.log(emailValue, passwordValue);
         // Reset code;
         setError(false);
         setSuccess('');
+        if(!terms){
+            alert("please accept terms!")
+            return;
+        }
         registationUsers(emailValue, passwordValue)
             .then(res => {
                 console.log(res.user);
@@ -31,11 +37,12 @@ const Registation = () => {
             })
     }
     // Eye Showing code here;
-    const handleEyeShowing = (e)=>{
+    const handleEyeShowing = (e) => {
         e.preventDefault();
         setEye(!eye);
         console.log("eye btn clicked");
     }
+   
     return (
         <div>
             <div className="hero min-h-screen">
@@ -55,10 +62,17 @@ const Registation = () => {
                                     <div className='relative'>
                                         {/* Password Input Field */}
                                         <label className="label">Password</label>
-                                        <input type={eye?'text':'password'} value={passwordValue} onChange={handlePasswordChange} className="input" placeholder="Password" />
+                                        <input type={eye ? 'text' : 'password'} value={passwordValue} onChange={handlePasswordChange} className="input" placeholder="Password" />
                                         <button onClick={handleEyeShowing} className='absolute btn btn-ghost right-1'>
-                                           {eye? <FaEye />:<FaEyeLowVision />}
+                                            {eye ? <FaEye /> : <FaEyeLowVision />}
                                         </button>
+                                    </div>
+                                    {/* CheackBox code here */}
+                                    <div>
+                                        <label className="label">
+                                            <input name='terms' type="checkbox" className="checkbox" />
+                                            Accept me !
+                                        </label>
                                     </div>
 
                                     <button className="btn btn-neutral mt-4">Registation</button>
