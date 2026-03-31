@@ -1,21 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router';
 import useMyHook from '../../Hooks/useMyHook';
 import { AuthContext } from '../../Contexts/AuthContext';
 
 const LogIn = () => {
-  const {logInUsers} = useContext(AuthContext);
+  const { logInUsers } = useContext(AuthContext);
   const [emailValue, handleEmailChange] = useMyHook('');
   const [passwordValue, handlePasswordChange] = useMyHook('');
-  console.log(emailValue, passwordValue);
+  // Error and success message showing;
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState('');
+  // console.log(emailValue, passwordValue);
   const loginSubmit = (e) => {
     e.preventDefault();
-    logInUsers(emailValue,passwordValue)
-    .then(res=>{
-      console.log(res.user);
-    }).catch(error=>{
-      console.log(error.message);
-    })
+    setSuccess('');
+    setError(false);
+    logInUsers(emailValue, passwordValue)
+      .then(res => {
+        console.log(res.user);
+        setSuccess(res.user)
+      }).catch(error => {
+        console.log(error.message);
+        setError(error.message)
+      })
 
 
 
@@ -40,6 +47,11 @@ const LogIn = () => {
                   <div><a className="link link-hover">Forgot password?</a></div>
                   <button className="btn btn-neutral mt-4">Login</button>
                 </fieldset>
+                {/* Errror and success message */}
+                <div>
+                  {success && <p className='text-green-500-500 font-bold mt-3'>Successfully Registation!</p>}
+                  {error && <p className='text-red-500 font-bold mt-3'>{error}</p>}
+                </div>
                 <div>
                   New to our website ? please <NavLink className={'text-blue-600 font-bold underline text-sm'} to={'/registation'}> Registation</NavLink>
                 </div>
