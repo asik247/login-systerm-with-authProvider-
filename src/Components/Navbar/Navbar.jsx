@@ -3,22 +3,26 @@ import { NavLink } from 'react-router';
 import { AuthContext } from '../../Contexts/AuthContext';
 
 const Navbar = () => {
-    const {signOutUsers} = useContext(AuthContext);
-    const signOutHandler = ()=>{
+    const { signOutUsers, user } = useContext(AuthContext);
+    const signOutHandler = () => {
         signOutUsers()
-        .then(()=>{
-            alert("signOut done");
-        }).catch(error=>{
-            console.log(error);
-        })
+            .then(() => {
+                alert("signOut done");
+            }).catch(error => {
+                console.log(error);
+            })
     }
-    
+
     const links = <>
         <li><NavLink to={'/'}>Home</NavLink></li>
         <li><NavLink to={'/registation'}>Registation</NavLink></li>
         <li><NavLink to={'/login'}>LogIn</NavLink></li>
-        <li><NavLink to={'/orders'}>Orders</NavLink></li>
-        <li><NavLink to={'/profile'}>Profile</NavLink></li>
+        {user && <>
+            <li><NavLink to={'/orders'}>Orders</NavLink></li>
+            <li><NavLink to={'/profile'}>Profile</NavLink></li>
+        </>
+        }
+
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -37,11 +41,12 @@ const Navbar = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                  {links}
+                    {links}
                 </ul>
             </div>
             <div className="navbar-end">
-                <a onClick={signOutHandler} className="btn">Button</a>
+               
+                {user ?  <a onClick={signOutHandler} className="btn">SignOut</a> : <a className="btn">SignIn</a>}
             </div>
         </div>
     );
