@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../Contexts/AuthContext';
 import useMyHook from '../../Hooks/useMyHook';
+import { FaEye } from 'react-icons/fa';
+import { FaEyeLowVision } from 'react-icons/fa6';
 
 const Registation = () => {
     // RegistationUsers Recive;
@@ -11,6 +13,7 @@ const Registation = () => {
     // Error and success message showing;
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState('');
+    const [eye,setEye] = useState(false);
     const submitBtn = (e) => {
         e.preventDefault();
         console.log(emailValue, passwordValue);
@@ -27,6 +30,12 @@ const Registation = () => {
                 setError(error.message)
             })
     }
+    // Eye Showing code here;
+    const handleEyeShowing = (e)=>{
+        e.preventDefault();
+        setEye(!eye);
+        console.log("eye btn clicked");
+    }
     return (
         <div>
             <div className="hero min-h-screen">
@@ -42,9 +51,16 @@ const Registation = () => {
                                     {/* Email Input Field */}
                                     <label className="label">Email</label>
                                     <input type="email" value={emailValue} onChange={handleEmailChange} className="input" placeholder="Email" />
-                                    {/* Password Input Field */}
-                                    <label className="label">Password</label>
-                                    <input type="password" value={passwordValue} onChange={handlePasswordChange} className="input" placeholder="Password" />
+
+                                    <div className='relative'>
+                                        {/* Password Input Field */}
+                                        <label className="label">Password</label>
+                                        <input type={eye?'text':'password'} value={passwordValue} onChange={handlePasswordChange} className="input" placeholder="Password" />
+                                        <button onClick={handleEyeShowing} className='absolute btn btn-ghost right-1'>
+                                           {eye? <FaEye />:<FaEyeLowVision />}
+                                        </button>
+                                    </div>
+
                                     <button className="btn btn-neutral mt-4">Registation</button>
                                 </fieldset>
                                 {/* Errror and success message */}
